@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+
+    <title>Santkrupa | invoice</title>
+
+    <style>
+       
+        .invoice-box {
+            
+            padding: 5px;
+            line-height: 5px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <table class="invoice-box" border="2">
+
+        <thead class="table-dark text-center">
+            
+            <tr>
+                <th colspan="5">
+                    {% if data.invoice_type == 1 %}
+                    <h3 style="font-size: 45px;"><br>SANTKRUPA TRANSPORT</h3>
+                    {% elif data.invoice_type == 2 %}
+                    <h3 style="font-size: 45px;"><br>SHARANYA TRANSPORT</h3>
+                    {% endif %}
+                </th>
+            </tr>
+            <tr>
+                <th colspan="5">
+                    <h5 style="font-size: 15px;">At Post - Chikhali, Patilnager, Tal - Havali, Dist. - Pune. 62 <br><br>
+                        Mob.- 9657571818,
+                        9604535454 <br><br>
+                        {% if data.invoice_type == 1 %}
+                        GSTIN NO:- 27AMAPM7210L1Z1
+                        {% endif %}
+                    </h5>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="5">
+                    <h5 style="font-size: 15px;">TAX INVOICE
+
+                    </h5>
+                </th>
+            </tr>
+        </thead>
+        {% csrf_token %}
+        <tbody style="background-color: white;">
+            <tr>
+                <td colspan="3" rowspan="4">
+                    <div style="padding-top: 10px;padding-left: 10px;">
+                        <h1>TO,</h1>
+                        <h1 style="padding-left: 10px;padding-top: -10px;">
+                            {{data.company}} <br><br>
+                            {{data.address}} <br><br>
+                            {{data.city}} {{data.state}} <br><br>
+                            GSTIN NO: {{data.gst}}
+                        </h1>
+                        <br>
+                    </div>
+                </td>
+                <td colspan="2">
+
+                </td>
+            
+            <tr>
+                <td>
+                    <h2>BILL NO</h2>
+                </td>
+                
+                <td>
+                    <h1 style="font-size: 15px;">{{data.bill_no}}</h1>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <h2>BILL DATE</h2>
+                </td>
+                
+                <td>
+                    <h2>{{data.date}}</h2>
+                </td>
+                
+            </tr>
+            <tr></tr>
+                
+            </tr>
+            
+            <tr class="thead-dark text-center">
+                <th style="width: 30%;font-size: 15px;">Particular</th>
+                <th style="font-size: 15px;">Vehicals</th>
+                <th style="font-size: 15px;">Trip</th>
+                <th style="font-size: 15px;">Rate</th>
+                <th style="font-size: 15px;" colspan="1" >Amount</th>
+            </tr>
+            <!-- ==============1============== -->
+            {% for i in data1 %}
+            <tr class="text-center">
+                <td>
+                    <p style="font-size: 15px;padding-top: 8px;">{{i.from_company}}</p>
+                    <p style="padding-top:-8px ;">TO</p>
+                    <p style="font-size: 15px;padding-top:-8px ;">{{i.to_company}}</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{i.vehical}}</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{i.trip}}</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{i.rate}}</p>
+                </td>
+                <td class="input-group">
+                    <p style="font-size: 15px;">{{i.amount}}.00</p>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if data.laborer %}
+            <tr class="text-center">
+                <td>
+                    <h1 style="font-size: 15px;padding-top: 8px;">{{data.laborer}}</h1>
+                <td>
+                    <h1 style="font-size: 15px;">{{data.lvno}}</h1>
+                </td>
+                <td>
+                    <h1 style="font-size: 15px;">{{data.ltrip}}</h1>
+                </td>
+                <td>
+                    <h1 style="font-size: 15px;">{{data.lrate}}</h1>
+                </td>
+                <td class="input-group">
+                    <h1 style="font-size: 15px;">{{data.lamount}}.00</h1>
+                </td>
+            </tr>
+            {% endif %}
+            {% if data.invoice_type == 1 %}
+            <tr>
+                <td colspan="2" rowspan="6">
+                    <p style="font-size: 15px;">Total Amount In Words</p>
+                    <h1 style="font-size: 15px;">{{data.word_total}} ONLY</h1>
+                </td>
+                <td colspan="2"><p style="font-size: 15px;">Total Amount Befor Tax</p></td>
+                <td>
+                    <p style="font-size: 15px;">{{data.total_amount}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-size: 15px;">SGST</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.sgst}}%</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.sgst_amount}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-size: 15px;">CGST</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.cgst}}%</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.cgst_amount}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-size: 15px;">Total GST</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.tgst}}</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.tgst_amount}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p style="font-size: 15px;">Total Amount GST</p>
+                </td>
+                <td>
+                    <p style="font-size: 15px;">{{data.grand_total}}</p>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="3">                
+                    <p style="font-size: 12px;">Certifited that the paeticulars given above are true & correct</p>
+                </td>
+            </tr>
+            {% elif data.invoice_type == 2 %}
+            <tr>
+                <td colspan="3">
+                </td>
+                <td><p style="font-size: 15px;">Total</p></td>
+                <td><p style="font-size: 15px;">{{data.total_amount}}.00</p></td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <h3 style="font-size: 15px;">Rs. In Wrods:- {{data.word_total}}</h3>
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <td colspan="5">
+                    <br>
+                    {% if data.invoice_type == 1 %}
+                    <h1 style="font-size: 13px;vertical-align: bottom !important;margin-left: 480px;padding-bottom: -10px;">For. SANTKRUPA TRANSPORT</h1>
+                    {% elif data.invoice_type == 2 %}
+                    <div style="padding-top: -10px;">
+                        <h1>Account Details,</h1>
+                        <h1 style="padding-top: -10px;">Account Name :- SHARANYA TRANSPORT</h1>
+                        <h1 style="padding-top: -10px;">Account No :- 50200072291251</h1>
+                        <h1 style="padding-top: -10px;">IFSC Code :- HDFC0001795</h1>
+                        <h1 style="padding-top: -10px;">Account Type :- Current</h1>
+                        <h1 style="padding-top: -10px;">Branch :- Chinchwad</h1>
+                    </div>
+                    
+                    <h1 style="font-size: 13px;vertical-align: bottom !important;margin-left: 480px;padding-bottom: -10px;">For. SHARANYA TRANSPORT</h1>
+                    {% endif %}
+                    <br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

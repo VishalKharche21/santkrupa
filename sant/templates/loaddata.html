@@ -1,0 +1,10 @@
+{% for d in i %}
+<INPUT TYPE="TEXT" NAME="company-address" class="form-control" placeholder="Address" value="{{d.address|upper}}"><br>
+<div class="input-group">
+    <INPUT TYPE="TEXT" NAME="company-city" class="form-control" placeholder="City" value="{{d.city|upper}}"><br>
+    <INPUT TYPE="TEXT" NAME="company-state" class="form-control mx-2" placeholder="State" value="{{d.state|upper}}"><br>
+</div><br>
+<INPUT TYPE="TEXT" NAME="company-gst" class="form-control" placeholder="GST NO" value="{{d.gstno|upper}}"><br>
+
+   
+    {% endfor %}

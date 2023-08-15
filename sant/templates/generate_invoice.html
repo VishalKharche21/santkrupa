@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/datatables.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+
+    <title>A simple, clean, and responsive HTML invoice template</title>
+
+    <style>
+        .invoice-box {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <br><br><br>
+    <div class="invoice-box">
+        {% if data.invoice_type == 1 %}
+        <form action="{% url 'santkrupa_invoice' 1 %}" method="POST" id="Displayform" data-url="{% url 'loaddata' %}">
+        {% elif data.invoice_type == 2 %}
+        <form action="{% url 'santkrupa_invoice' 2 %}" method="POST" id="Displayform" data-url="{% url 'loaddata' %}">
+        {% endif %}
+            <table class="table table-bordered table-hover table-responsive">
+
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th colspan="5">
+                            {% if data.invoice_type == 1 %}
+                            <h3><br>SANTKRUPA TRANSPORT</h3>
+                            {% elif data.invoice_type == 2 %}
+                            <h3><br>SHARANYA TRANSPORT</h3>
+                            {% endif %}
+                            <h5>At Post - Chikhali, Patilnager, Tal - Havali, Dist. - Pune. 62 <br> Mob.- 9657571818,
+                                9604535454
+                            </h5>
+                        </th>
+                    </tr>
+                </thead>
+                {% csrf_token %}
+                <tbody style="background-color: white;">
+                    <tr>
+                        <td colspan="3">
+                            <div>
+                                TO, <br>
+                                <b>{{data.company}} <br>
+                                {{data.address}} <br>
+                                {{data.city}} {{data.state}}</b> <br>
+                                <b>GST NO :</b>{{data.gst}}
+
+                                
+                                <br>
+                                <div id="loaddata_id">
+                                </div>
+
+                            </div>
+                        </td>
+                        <td colspan="2">
+                            <b>BILL NO</b> : {{data.bill_no}}
+                            
+                            <br>
+                            <div class="input-group" style="margin-top: 2%">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Dated: {{data.date|date:"d-m-Y"}}</span>
+                                </div>
+                                
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                    <tr class="thead-dark text-center">
+                        <th style="width: 30%">Particular</th>
+                        <th>Vehicals</th>
+                        <th>Trip</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                    {% for i in data1 %}
+                    <tr class="text-center" id="after-this1">
+                        <td>
+
+                            <br>
+                            {{i.from_company}}
+                            <br>
+                            TO
+                            <br>
+                            {{i.to_company}}
+                        </td>
+                        <td>
+                            {{i.vehical}}
+
+                        </td>
+                        <td>{{i.trip}}
+                        </td>
+                        <td>
+                            <div>{{i.rate}}</div>
+                        </td>
+                        <td>
+                            
+                            {{i.amount}}
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if data.laborer %}
+            <tr class="text-center">
+                <td>
+                    <h1 style="font-size: 15px;padding-top: 8px;">{{data.laborer}}</h1>
+                <td>
+                    <h1 style="font-size: 15px;">{{data.lvno}}</h1>
+                </td>
+                <td>
+                    <h1 style="font-size: 15px;">{{data.ltrip}}</h1>
+                </td>
+                <td>
+                    <h1 style="font-size: 15px;">{{data.lrate}}</h1>
+                </td>
+                <td class="input-group">
+                    <h1 style="font-size: 15px;">{{data.lamount}}</h1>
+                </td>
+            </tr>
+            {% endif %}
+
+
+
+                    <tr>
+                        <td colspan="2" rowspan="2">
+                            <div class="input-group">
+                                Total Amount In Words
+                            </div>
+                            {{data.word_total}}
+                        </td>
+                        <td colspan="2"><b class="float-right">Total: </b></td>
+                        <td>{{data.total_amount}}
+                        </td>
+                    </tr>
+                    {% if data.invoice_type == 1 %}
+                    <tr>
+                        <td colspan="2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">SGST </span>
+                                </div>
+                               
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1"> {{data.sgst}} %</span>
+                                </div>
+                            </div>
+                            <div class="input-group" style="margin-top: 2%">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">CGST</span>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1"> {{data.cgst}} %</span>
+                                </div>
+                            </div>
+                            <div class="input-group" style="margin-top: 2%">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Total GST</span>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1"> {{data.tgst}} %</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{data.sgst_amount}}.00
+                            </div>
+                            <div style="margin-top: 2%">
+                                {{data.cgst_amount}}.00
+                            </div>
+                            <div style="margin-top: 2%">
+                                {{data.tgst_amount}}.00
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+
+                        </td>
+                        <td colspan="3">
+                            <div class="input-group">
+                                <b>Grand Total</b> : {{data.grand_total}}.00
+                            </div>
+                            <div style="margin-top: 2%">
+                                <p>Certifited that the paeticulars given above are true & correct</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+
+                        <td colspan="6">
+                            <br>
+                            <br>
+                            {% if data.invoice_type == 1 %}
+                            <div style="vertical-align: bottom !important; text-align: end">
+                                For. SANTKRUPA TRANSPORT
+                            </div>
+                            {% elif data.invoice_type == 2 %}
+                            <div style="vertical-align: bottom !important; text-align: end">
+                                For. SHARANYA TRANSPORT
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container" style="margin-bottom: 3%">
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="btn btn-group">
+                            <a href="{% url 'generate_invoice' %}" target="_blank" class="btn btn-primary mx-1">print</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    
+</body>
+
+</html>

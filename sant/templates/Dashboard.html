@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+
+    <title>Santkrupa | Dashboard</title>
+
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    `
+                </a>
+                <h1 class="h3 mb-3">Invoice Generator</h1>
+                <a href="{% url 'logout' %}" class="btn btn-danger mx-7">logout</a>
+
+                
+            </nav>
+
+            <main class="content">
+                
+                <div class="container-fluid p-0">
+                    {% block content %}
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title mt-3">SANTKRUPA TRANSPORT</h5>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'santkrupa_invoice' 1 %}" class="btn btn-primary mt-3">Generate</a>
+                                    <a href="{% url 'santkrupa_list' 1 %}" class="btn btn-primary mt-3">Invoice List</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title mt-3">SHARANYA TRANSPORT</h5>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'santkrupa_invoice' 2 %}" class="btn btn-primary mt-3">Generate</a>
+                                    <a href="{% url 'santkrupa_list' 2 %}" class="btn btn-primary mt-3">Invoice List</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title mt-3">Add Company</h5>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'addcustomer' %}" class="btn btn-primary mt-3">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock content %}
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-start">
+                            <p class="mb-0">
+                                <a class="text-muted" href=""
+                                    target="_blank"><strong>Vishal Kharche</strong></a> &copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted">Contact :</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted">9503882838</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{% static 'css/app.js' %}"></script>
+    
+
+</body>
+
+</html>
